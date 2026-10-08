@@ -19,8 +19,8 @@ async function setup(loginResult = true) {
 }
 
 async function fill(wrapper, email, password) {
-  await wrapper.find("#email").setValue(email);
-  await wrapper.find("#password").setValue(password);
+  await wrapper.find("#login-email-input").setValue(email);
+  await wrapper.find("#login-password-input").setValue(password);
   await wrapper.find("form").trigger("submit");
   await flushPromises();
 }
@@ -35,21 +35,30 @@ describe("LoginPage", () => {
   it("memperingatkan jika kolom kosong", async () => {
     const { wrapper, login } = await setup();
     await fill(wrapper, "", "");
-    expect(Swal.fire).toHaveBeenCalledWith(expect.objectContaining({ icon: "warning", text: "Email dan kata sandi wajib diisi." }));
+    expect(Swal.fire).toHaveBeenCalledWith(
+      expect.objectContaining({
+        icon: "warning",
+        text: "Email dan kata sandi wajib diisi.",
+      }),
+    );
     expect(login).not.toHaveBeenCalled();
   });
 
   it("memperingatkan jika password kosong", async () => {
     const { wrapper, login } = await setup();
     await fill(wrapper, "a@b.co", "");
-    expect(Swal.fire).toHaveBeenCalledWith(expect.objectContaining({ icon: "warning" }));
+    expect(Swal.fire).toHaveBeenCalledWith(
+      expect.objectContaining({ icon: "warning" }),
+    );
     expect(login).not.toHaveBeenCalled();
   });
 
   it("memperingatkan jika format email salah", async () => {
     const { wrapper, login } = await setup();
     await fill(wrapper, "bukan-email", "123456");
-    expect(Swal.fire).toHaveBeenCalledWith(expect.objectContaining({ text: "Format email tidak valid." }));
+    expect(Swal.fire).toHaveBeenCalledWith(
+      expect.objectContaining({ text: "Format email tidak valid." }),
+    );
     expect(login).not.toHaveBeenCalled();
   });
 
@@ -57,14 +66,18 @@ describe("LoginPage", () => {
     const { wrapper, login, router } = await setup(true);
     await fill(wrapper, " a@b.co ", "123456");
     expect(login).toHaveBeenCalledWith("a@b.co", "123456");
-    expect(Swal.fire).toHaveBeenCalledWith(expect.objectContaining({ icon: "success", text: "Login berhasil" }));
+    expect(Swal.fire).toHaveBeenCalledWith(
+      expect.objectContaining({ icon: "success", text: "Login berhasil" }),
+    );
     expect(router.push).toHaveBeenCalledWith("/");
   });
 
   it("login gagal menampilkan dialog error", async () => {
     const { wrapper, router } = await setup(false);
     await fill(wrapper, "a@b.co", "salah1");
-    expect(Swal.fire).toHaveBeenCalledWith(expect.objectContaining({ icon: "error", text: "Kredensial salah" }));
+    expect(Swal.fire).toHaveBeenCalledWith(
+      expect.objectContaining({ icon: "error", text: "Kredensial salah" }),
+    );
     expect(router.push).not.toHaveBeenCalled();
   });
 
@@ -72,6 +85,8 @@ describe("LoginPage", () => {
     const { wrapper, auth } = await setup();
     auth.isAuthLogin = true;
     await wrapper.vm.$nextTick();
-    expect(wrapper.find("button[type=submit]").attributes("disabled")).toBeDefined();
+    expect(
+      wrapper.find("#login-submit-button").attributes("disabled"),
+    ).toBeDefined();
   });
 });

@@ -30,11 +30,11 @@ async function submit() {
 
     <form class="mt-6 space-y-4" novalidate @submit.prevent="submit">
       <div>
-        <label for="email" class="text-xs font-bold uppercase tracking-wide text-slate-500">Alamat Email</label>
+        <label for="login-email-input" class="text-xs font-bold uppercase tracking-wide text-slate-500">Alamat Email</label>
         <div class="relative mt-1">
           <Mail class="absolute left-3 top-3 h-4 w-4 text-slate-400" />
           <input
-            id="email"
+            id="login-email-input"
             type="email"
             placeholder="nama@email.com"
             :value="email"
@@ -44,11 +44,11 @@ async function submit() {
         </div>
       </div>
       <div>
-        <label for="password" class="text-xs font-bold uppercase tracking-wide text-slate-500">Kata Sandi</label>
+        <label for="login-password-input" class="text-xs font-bold uppercase tracking-wide text-slate-500">Kata Sandi</label>
         <div class="relative mt-1">
           <Lock class="absolute left-3 top-3 h-4 w-4 text-slate-400" />
           <input
-            id="password"
+            id="login-password-input"
             type="password"
             placeholder="********"
             :value="password"
@@ -58,6 +58,7 @@ async function submit() {
         </div>
       </div>
       <button
+        id="login-submit-button"
         type="submit"
         :disabled="auth.isAuthLogin"
         class="flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 py-2.5 text-sm font-bold text-white hover:bg-indigo-700 disabled:opacity-60"
