@@ -92,8 +92,8 @@ describe("HomePage", () => {
   });
 
   it.each([
-    ["open", { is_closed: 1 }],
-    ["closed", { is_closed: 0 }],
+    ["open", { is_closed: 0 }],
+    ["closed", { is_closed: 1 }],
   ])("klik tab %s memuat ulang dengan filter yang benar", async (key, query) => {
     const { wrapper, fetchAucations, router } = await setup();
     await wrapper.get(`[data-testid="tab-${key}"]`).trigger("click");

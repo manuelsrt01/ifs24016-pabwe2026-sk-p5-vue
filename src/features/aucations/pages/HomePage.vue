@@ -14,12 +14,12 @@ import { useUsersStore } from "../../users/states/usersStore.js";
 import AddModal from "../modals/AddModal.vue";
 import { useAucationsStore } from "../states/aucationsStore.js";
 
-// Parameter filter sesuai dokumentasi API: is_closed=1 -> lelang terbuka, is_closed=0 -> lelang tertutup.
+// Perilaku nyata server (terverifikasi di aplikasi): is_closed=1 -> lelang ditutup, is_closed=0 -> lelang berlangsung.
 const TABS = [
   { key: "all", label: "Semua Lelang", query: {} },
   { key: "mine", label: "Lelang Saya", query: { is_me: 1 } },
-  { key: "open", label: "Lelang Berlangsung", query: { is_closed: 1 } },
-  { key: "closed", label: "Lelang Ditutup", query: { is_closed: 0 } },
+  { key: "open", label: "Lelang Berlangsung", query: { is_closed: 0 } },
+  { key: "closed", label: "Lelang Ditutup", query: { is_closed: 1 } },
 ];
 const TAB_KEYS = TABS.map((item) => item.key);
 
