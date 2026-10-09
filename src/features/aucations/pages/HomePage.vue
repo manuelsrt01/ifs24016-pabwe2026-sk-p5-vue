@@ -1,6 +1,13 @@
 <script setup>
 import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue";
-import { Clock, Eye, Image as ImageIcon, Plus, Search, Trash2 } from "lucide-vue-next";
+import {
+  Clock,
+  Eye,
+  Image as ImageIcon,
+  Plus,
+  Search,
+  Trash2,
+} from "lucide-vue-next";
 import { RouterLink, useRoute, useRouter } from "vue-router";
 import {
   confirmAndRun,
@@ -33,16 +40,21 @@ const showAdd = ref(false);
 const now = ref(Date.now());
 let timer = null;
 
-const tab = computed(() => (TAB_KEYS.includes(route.query.tab) ? route.query.tab : "all"));
+const tab = computed(() =>
+  TAB_KEYS.includes(route.query.tab) ? route.query.tab : "all",
+);
 const myId = computed(() => (users.profile ? users.profile.id : null));
 const filtered = computed(() => {
   const keyword = search.value.trim().toLowerCase();
-  return store.aucations.filter((item) => `${item.title} ${item.description}`.toLowerCase().includes(keyword));
+  return store.aucations.filter((item) =>
+    `${item.title} ${item.description}`.toLowerCase().includes(keyword),
+  );
 });
 
 async function load() {
   const current = TABS.find((item) => item.key === tab.value);
-  if (!(await store.fetchAucations(current.query))) await showErrorDialog(store.error);
+  if (!(await store.fetchAucations(current.query)))
+    await showErrorDialog(store.error);
 }
 
 const selectTab = (key) => router.push({ path: "/", query: { tab: key } });
@@ -52,7 +64,13 @@ const statusOf = (item) => formatCountdown(item.closed_at, now.value);
 const closedOf = (item) => isClosed(item.closed_at, now.value);
 
 const removeOne = (item) =>
-  confirmAndRun("Hapus lelang?", `"${item.title}" akan dihapus permanen.`, () => store.removeAucation(item.id), store, load);
+  confirmAndRun(
+    "Hapus lelang?",
+    `"${item.title}" akan dihapus permanen.`,
+    () => store.removeAucation(item.id),
+    store,
+    load,
+  );
 
 const removeAll = () =>
   confirmAndRun(
@@ -85,13 +103,15 @@ onBeforeUnmount(() => clearInterval(timer));
     <div class="flex flex-wrap items-center justify-between gap-3">
       <div>
         <h1 class="text-2xl font-extrabold">Dashboard Lelang</h1>
-        <p class="text-sm text-slate-500">Temukan barang, ajukan tawaran, atau pasang lelang milikmu.</p>
+        <p class="text-sm text-slate-500">
+          Temukan barang, ajukan tawaran, atau pasang lelang milikmu.
+        </p>
       </div>
       <div class="flex gap-2">
         <button
           v-if="tab === 'mine'"
           type="button"
-          class="flex items-center gap-2 rounded-xl bg-rose-50 px-4 py-2 text-sm font-bold text-rose-600 hover:bg-rose-100"
+          class="flex items-center gap-2 rounded-xl bg-rose-50 px-4 py-2 text-sm font-bold text-rose-700 hover:bg-rose-100"
           data-testid="delete-all-button"
           @click="removeAll"
         >
@@ -115,7 +135,9 @@ onBeforeUnmount(() => clearInterval(timer));
         type="button"
         :class="[
           'rounded-full px-4 py-1.5 text-sm font-semibold',
-          tab === item.key ? 'bg-indigo-600 text-white' : 'bg-white text-slate-600 ring-1 ring-slate-200 hover:bg-slate-100',
+          tab === item.key
+            ? 'bg-indigo-600 text-white'
+            : 'bg-white text-slate-600 ring-1 ring-slate-200 hover:bg-slate-100',
         ]"
         :data-testid="`tab-${item.key}`"
         @click="selectTab(item.key)"
@@ -135,8 +157,14 @@ onBeforeUnmount(() => clearInterval(timer));
       />
     </div>
 
-    <p v-if="store.isAucation" class="text-slate-500" data-testid="loading">Memuat lelang...</p>
-    <p v-else-if="filtered.length === 0" class="rounded-2xl bg-white p-8 text-center text-slate-500" data-testid="empty">
+    <p v-if="store.isAucation" class="text-slate-500" data-testid="loading">
+      Memuat lelang...
+    </p>
+    <p
+      v-else-if="filtered.length === 0"
+      class="rounded-2xl bg-white p-8 text-center text-slate-500"
+      data-testid="empty"
+    >
       Tidak ada lelang yang ditemukan.
     </p>
     <div v-else class="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
@@ -147,8 +175,17 @@ onBeforeUnmount(() => clearInterval(timer));
         data-testid="aucation-card"
       >
         <div class="aspect-video bg-slate-100">
-          <img v-if="item.cover" :src="item.cover" :alt="item.title" class="h-full w-full object-cover" />
-          <div v-else class="flex h-full items-center justify-center text-slate-300" data-testid="no-cover">
+          <img
+            v-if="item.cover"
+            :src="item.cover"
+            :alt="item.title"
+            class="h-full w-full object-cover"
+          />
+          <div
+            v-else
+            class="flex h-full items-center justify-center text-slate-300"
+            data-testid="no-cover"
+          >
             <ImageIcon class="h-10 w-10" />
           </div>
         </div>
@@ -156,7 +193,9 @@ onBeforeUnmount(() => clearInterval(timer));
           <span
             :class="[
               'inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-bold',
-              closedOf(item) ? 'bg-slate-100 text-slate-600' : 'bg-emerald-50 text-emerald-700',
+              closedOf(item)
+                ? 'bg-slate-100 text-slate-600'
+                : 'bg-emerald-50 text-emerald-700',
             ]"
             data-testid="status"
           >
@@ -165,11 +204,16 @@ onBeforeUnmount(() => clearInterval(timer));
           <h2 class="truncate font-bold">{{ item.title }}</h2>
           <p class="text-xs text-slate-500">oleh {{ item.author.name }}</p>
           <div class="text-sm">
-            <p>Harga awal: <strong>{{ formatRupiah(item.start_bid) }}</strong></p>
-            <p v-if="highestOf(item) > 0" data-testid="highest">
-              Tawaran tertinggi: <strong>{{ formatRupiah(highestOf(item)) }}</strong>
+            <p>
+              Harga awal: <strong>{{ formatRupiah(item.start_bid) }}</strong>
             </p>
-            <p v-else data-testid="bid-count" class="text-slate-500">{{ item.bids.length }} tawaran</p>
+            <p v-if="highestOf(item) > 0" data-testid="highest">
+              Tawaran tertinggi:
+              <strong>{{ formatRupiah(highestOf(item)) }}</strong>
+            </p>
+            <p v-else data-testid="bid-count" class="text-slate-500">
+              {{ item.bids.length }} tawaran
+            </p>
           </div>
           <div class="flex gap-2 pt-1">
             <RouterLink
@@ -182,7 +226,7 @@ onBeforeUnmount(() => clearInterval(timer));
             <button
               v-if="isMine(item)"
               type="button"
-              class="rounded-xl bg-rose-50 px-3 text-rose-600 hover:bg-rose-100"
+              class="rounded-xl bg-rose-50 px-3 text-rose-700 hover:bg-rose-100"
               aria-label="Hapus lelang"
               :data-testid="`delete-${item.id}`"
               @click="removeOne(item)"

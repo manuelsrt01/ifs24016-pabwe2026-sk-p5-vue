@@ -1,15 +1,19 @@
-import Swal from "sweetalert2";
+// SweetAlert2 dimuat saat dialog pertama kali dibutuhkan agar JavaScript awal lebih kecil
+const loadSwal = async () => (await import("sweetalert2")).default;
 
 const COLOR = "#4f46e5";
 
-const fire = (icon, title, text) =>
-  Swal.fire({ icon, title, text, confirmButtonColor: COLOR });
+const fire = async (icon, title, text) => {
+  const Swal = await loadSwal();
+  return Swal.fire({ icon, title, text, confirmButtonColor: COLOR });
+};
 
 export const showSuccessDialog = (text) => fire("success", "Berhasil", text);
 export const showErrorDialog = (text) => fire("error", "Gagal", text);
 export const showWarningDialog = (text) => fire("warning", "Perhatian", text);
 
 export async function showConfirmDialog(title, text) {
+  const Swal = await loadSwal();
   const result = await Swal.fire({
     icon: "question",
     title,
@@ -56,7 +60,9 @@ export function formatCountdown(closedAt, now) {
 export function getHighestBid(bids) {
   return Math.max(
     0,
-    ...bids.filter((item) => typeof item === "object").map((item) => Number(item.bid)),
+    ...bids
+      .filter((item) => typeof item === "object")
+      .map((item) => Number(item.bid)),
   );
 }
 
@@ -68,12 +74,16 @@ export const toApiDateTime = (value) => `${value.replace("T", " ")}:00`;
 // "2026-12-31 23:59:00" (format API) -> "2026-12-31T23:59" (input datetime-local)
 export const toInputDateTime = (value) => value.replace(" ", "T").slice(0, 16);
 
-export function validateAucationForm({ title, description, startBid, closedAt }, now) {
+export function validateAucationForm(
+  { title, description, startBid, closedAt },
+  now,
+) {
   if (!title.trim()) return "Judul lelang wajib diisi.";
   if (!description.trim()) return "Deskripsi barang wajib diisi.";
   if (!(Number(startBid) > 0)) return "Harga awal harus lebih besar dari 0.";
   if (!closedAt) return "Waktu penutupan wajib diisi.";
-  if (new Date(closedAt).getTime() <= now) return "Waktu penutupan harus di masa depan.";
+  if (new Date(closedAt).getTime() <= now)
+    return "Waktu penutupan harus di masa depan.";
   return "";
 }
 

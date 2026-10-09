@@ -10,10 +10,21 @@ function mockApi() {
     const path = new URL(url).pathname;
     const data = path.endsWith("/users/me")
       ? { user: { id: 1, name: "Budi", email: "budi@x.co", photo: null } }
-      : { aucations: [{
-          id: 1, user_id: 2, title: "Laptop Gaming", cover: null, description: "Spek tinggi",
-          start_bid: 5000000, closed_at: "2999-01-01 10:00:00", author: { name: "Sari" }, bids: [],
-        }] };
+      : {
+          aucations: [
+            {
+              id: 1,
+              user_id: 2,
+              title: "Laptop Gaming",
+              cover: null,
+              description: "Spek tinggi",
+              start_bid: 5000000,
+              closed_at: "2999-01-01 10:00:00",
+              author: { name: "Sari" },
+              bids: [],
+            },
+          ],
+        };
     return { json: async () => ({ status: "success", message: "ok", data }) };
   });
 }
@@ -29,6 +40,16 @@ async function render(path) {
 }
 
 describe("App", () => {
+  it("menampilkan kerangka sementara sebelum navigasi awal selesai", async () => {
+    const pinia = createMockPinia();
+    const router = createAppRouter(createMemoryHistory());
+    const wrapper = mount(App, { global: { plugins: [pinia, router] } });
+    expect(wrapper.find('[data-testid="app-loading"]').exists()).toBe(true);
+    await router.isReady();
+    await flushPromises();
+    expect(wrapper.find('[data-testid="app-loading"]').exists()).toBe(false);
+  });
+
   it("user belum login melihat halaman login", async () => {
     const { wrapper, router } = await render("/");
     expect(router.currentRoute.value.path).toBe("/auth/login");

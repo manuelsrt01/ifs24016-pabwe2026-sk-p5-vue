@@ -81,6 +81,7 @@ onBeforeUnmount(() => clearInterval(timer));
 
 <template>
   <section class="space-y-6">
+    <h1 class="sr-only">Detail Lelang</h1>
     <RouterLink to="/" class="inline-flex items-center gap-1 text-sm font-semibold text-indigo-600">
       <ArrowLeft class="h-4 w-4" /> Kembali ke dashboard
     </RouterLink>
@@ -104,7 +105,7 @@ onBeforeUnmount(() => clearInterval(timer));
             {{ closed ? "Ditutup" : "Berlangsung" }}
           </span>
         </div>
-        <h1 class="text-3xl font-extrabold" data-testid="title">{{ store.aucation.title }}</h1>
+        <h2 class="text-3xl font-extrabold" data-testid="title">{{ store.aucation.title }}</h2>
         <p class="text-sm text-slate-500">Dilelang oleh {{ store.aucation.author.name }}</p>
 
         <div class="grid grid-cols-2 gap-3 text-sm">
@@ -130,7 +131,7 @@ onBeforeUnmount(() => clearInterval(timer));
             <button type="button" class="flex items-center gap-1 rounded-xl bg-slate-100 px-4 py-2 text-sm font-bold hover:bg-slate-200" data-testid="cover-button" @click="showCover = true">
               <Camera class="h-4 w-4" /> Ganti Cover
             </button>
-            <button type="button" class="flex items-center gap-1 rounded-xl bg-rose-50 px-4 py-2 text-sm font-bold text-rose-600 hover:bg-rose-100" data-testid="delete-button" @click="removeThis">
+            <button type="button" class="flex items-center gap-1 rounded-xl bg-rose-50 px-4 py-2 text-sm font-bold text-rose-700 hover:bg-rose-100" data-testid="delete-button" @click="removeThis">
               <Trash2 class="h-4 w-4" /> Hapus
             </button>
           </template>
