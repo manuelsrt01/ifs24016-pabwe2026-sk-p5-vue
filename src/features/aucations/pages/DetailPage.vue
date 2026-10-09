@@ -134,7 +134,7 @@ onBeforeUnmount(() => clearInterval(timer));
               <Trash2 class="h-4 w-4" /> Hapus
             </button>
           </template>
-          <button v-if="canBid" type="button" class="flex items-center gap-1 rounded-xl bg-emerald-600 px-4 py-2 text-sm font-bold text-white hover:bg-emerald-700" data-testid="bid-button" @click="showBid = true">
+          <button v-if="canBid" type="button" class="flex items-center gap-1 rounded-xl bg-emerald-700 px-4 py-2 text-sm font-bold text-white hover:bg-emerald-800" data-testid="bid-button" @click="showBid = true">
             <Gavel class="h-4 w-4" /> Ajukan Tawaran
           </button>
           <button v-if="canCancelBid" type="button" class="flex items-center gap-1 rounded-xl bg-amber-50 px-4 py-2 text-sm font-bold text-amber-700 hover:bg-amber-100" data-testid="cancel-bid-button" @click="cancelBid">

@@ -31,7 +31,11 @@ describe("authGuard", () => {
 
 describe("router", () => {
   it("mendefinisikan rute wajib", () => {
-    expect(routes.map((r) => r.path)).toEqual(["/auth", "/", "/:pathMatch(.*)*"]);
+    expect(routes.map((r) => r.path)).toEqual([
+      "/auth",
+      "/",
+      "/:pathMatch(.*)*",
+    ]);
     expect(defaultRouter.getRoutes().length).toBeGreaterThan(0);
   });
 
@@ -51,7 +55,7 @@ describe("router", () => {
     expect(router.currentRoute.value.path).toBe("/auth/register");
   });
 
-  it("user sudah login tidak kembali ke halaman login", async () => {
+  it("user sudah login tidak kembali ke halaman login dan dapat membuka semua halaman", async () => {
     localStorage.setItem("accessToken", "tok");
     createMockPinia();
     const router = createAppRouter(createMemoryHistory());
@@ -59,6 +63,8 @@ describe("router", () => {
     expect(router.currentRoute.value.path).toBe("/");
     await router.push("/aucations/3");
     expect(router.currentRoute.value.params.aucationId).toBe("3");
+    await router.push("/users");
+    expect(router.currentRoute.value.path).toBe("/users");
     await router.push("/profile");
     expect(router.currentRoute.value.path).toBe("/profile");
   });

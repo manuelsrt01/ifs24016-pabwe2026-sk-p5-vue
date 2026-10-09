@@ -162,7 +162,7 @@ onBeforeUnmount(() => clearInterval(timer));
           >
             <Clock class="h-3 w-3" /> {{ statusOf(item) }}
           </span>
-          <h3 class="truncate font-bold">{{ item.title }}</h3>
+          <h2 class="truncate font-bold">{{ item.title }}</h2>
           <p class="text-xs text-slate-500">oleh {{ item.author.name }}</p>
           <div class="text-sm">
             <p>Harga awal: <strong>{{ formatRupiah(item.start_bid) }}</strong></p>

@@ -21,7 +21,7 @@ const logoUrl = "/logo.svg";
           Platform lelang online modern: pasang barang, pantau tawaran tertinggi, dan tutup lelang tepat waktu.
         </p>
       </div>
-      <p class="text-sm text-indigo-200">&copy; Delcom Auction</p>
+      <p class="text-sm text-indigo-50">&copy; Delcom Auction</p>
     </section>
     <main class="flex items-center justify-center p-6">
       <div class="w-full max-w-md">

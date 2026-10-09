@@ -7,6 +7,7 @@
       "dependencies": {
         "@toast-ui/editor": "^3.2.2",
         "clsx": "^2.1.1",
+        "ifs24016-pabwe2026-sk-p5-vue": ".",
         "lucide-vue-next": "^1.0.0",
         "pinia": "^4.0.3",
         "sweetalert2": "^11.26.25",
@@ -280,6 +281,8 @@
     "hookable": ["hookable@5.5.3", "", {}, "sha512-Yc+BQe8SvoXH1643Qez1zqLRmbA5rCL+sSmk6TVos0LWVfNIB7PGncdlId77WzLGSIB5KaWgTaNTs2lNVEI6VQ=="],
 
     "html-encoding-sniffer": ["html-encoding-sniffer@7.0.0", "", { "dependencies": { "@exodus/bytes": "^1.15.1" } }, "sha512-UikN5yr7xsCDAq87Or5or0PAlD3HJJOKVzM05az588WnpDJ4Ux7a2A53Qi6gofGg2/EtvF/H4hCi/TXfCW4Y6w=="],
+
+    "ifs24016-pabwe2026-sk-p5-vue": ["ifs24016-pabwe2026-sk-p5-vue@root:", {}],
 
     "indent-string": ["indent-string@4.0.0", "", {}, "sha512-EdDDZu4A2OyIK7Lr/2zG+w5jmbuk1DVBnEwREQvBzspBJkCEbRa8GxU1lghYcaGJCnRWibjDXlq779X1/y5xwg=="],
 
